@@ -1,0 +1,32 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	height: 100vh;
+	width: 100vw;
+	background-image: linear-gradient(45deg, rgba(37, 37, 37, 1) 10%, rgba(26, 26, 26, 1) 100%),
+		linear-gradient(-45deg, rgba(37, 37, 37, 1) 10%, rgba(26, 26, 26, 1) 100%);
+	overflow: hidden;
+}
+.flame {
+	position: absolute;
+	height: 20px;
+	width: 10px;
+	border-radius: 50%;
+  background: rgba(255, 172, 40, 0.7);
+  box-shadow: 0px 2px 15px 5px rgba(255, 172, 40, 0.7);
+  z-index: 1;
+}
+.flame::before {
+  content: '';
+	height: 20px;
+	width: 10px;
+	background: rgb(0, 217, 255);
+	border-radius: 5px 5px 0px 0px;
+  position: absolute;
+  top: -9px;
+  left: 0;
+	transform-origin: 5px 0px;
+	z-index: 2;
+}
