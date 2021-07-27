@@ -9,16 +9,28 @@
       margin: 0;
       padding: 0;
     }
-    .div{
+    .div1{
       height: 50px;
       width: 10px;
       background: yellow;
       border-radius: 5px;
       box-shadow: 5px 5px 5px 0px red;
     }
+    .div2{
+      height: 10px;
+      width: 100px;
+      background-image: linear-gradient(90deg, rgb(255, 237, 136) 0%, 20%, rgb(0, 0, 0) 100%);
+    }
   </style>
 </head>
 <body>
-  <div class="div"></div>
+  <div class="div1"></div>
+  <div class="div2"></div>
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+    $(".div2").stop().animate({
+      'background-image': 'linear-gradient(90deg, rgb(0, 0, 0) 0%, 80%, rgb(255, 237, 136) 100%)'
+    }, 3000)
+  </script>
 </body>
 </html>

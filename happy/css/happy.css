@@ -11,22 +11,45 @@ body {
 }
 .flame {
 	position: absolute;
-	height: 20px;
-	width: 10px;
+	height: 10px;
+	width: 5px;
 	border-radius: 50%;
-  background: rgba(255, 172, 40, 0.7);
-  box-shadow: 0px 2px 15px 5px rgba(255, 172, 40, 0.7);
-  z-index: 1;
+	background: rgba(255, 172, 40, 0.7);
+	box-shadow: 0px 2px 15px 5px rgba(255, 172, 40, 0.7);
+	transform-origin: 50% 50%;
+	z-index: 1;
 }
 .flame::before {
-  content: '';
-	height: 20px;
-	width: 10px;
+	content: '';
+	height: 10px;
+	width: 5px;
 	background: rgb(0, 217, 255);
 	border-radius: 5px 5px 0px 0px;
-  position: absolute;
-  top: -9px;
-  left: 0;
-	transform-origin: 5px 0px;
+	position: absolute;
+	top: -5px;
+	left: 0;
 	z-index: 2;
+}
+.boom {
+	height: 100px;
+	width: 2px;
+	position: absolute;
+	transform-origin: 50% 100%;
+	border-radius: 1px;
+	z-index: 2;
+}
+
+.boom .flash {
+	height: 2px;
+	width: 2px;
+	box-shadow: 0px 0px 2px 2px rgb(255, 237, 136);
+	background: rgb(255, 237, 136);
+	border-radius: 50%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 3;
+}
+
+.boom .track {
 }
