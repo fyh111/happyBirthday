@@ -5,9 +5,12 @@ window.onload = function () {
   randomNum(5);
   // randomNum(1);
   var timer = setInterval(() => {
-    randomNum(3);
+    // randomNum(3);
     // randomNum(1);
   }, 3000);
+  document.addEventListener('click', function(event) {
+    console.log(event.clientX, event.clientY);
+  })
 }
 // 随机起点和终点的X坐标
 function getRandomX(num) {
@@ -40,7 +43,8 @@ function getBoomArray() {
 // 产生随机的起止点
 function randomNum(num) {
   for (var i = 0; i < num; i++) {
-    var startPointX = Math.floor(getRandomX(clientWidth));
+    // var startPointX = Math.floor(getRandomX(clientWidth));
+    var startPointX = 130;
     var endPointX = Math.floor(getRandomX(clientWidth));
     var endPointY = Math.floor(getRandomY(clientHeight));
     startAndEnd(startPointX, 0, endPointX, endPointY);
@@ -102,7 +106,7 @@ function boom(element, x, y) {
       })
       $(track).stop().animate({
         opacity: 0
-      }, 400)
+      }, 500)
       if ($(flash).is(':hidden')) {
         clearInterval(timer);
       }
