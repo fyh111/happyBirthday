@@ -4,6 +4,8 @@ const mutech = clientHeight / 10;
 const mutecw = clientWidth / 10;
 
 var initNum = 0;
+var initElementArr = ['.initPage', '.firstPage', '.secondPage'];
+var eventList = [aaa, createStar, startBoom];
 
 const nextPage = document.querySelector('.nextPage');
 const initPage = document.querySelector('.initPage');
@@ -16,9 +18,26 @@ window.onload = function () {
   document.addEventListener('click', function (event) {
     console.log(event.clientX, event.clientY);
   })
-  nextPage.addEventListener('click', nextPageClick, false);
+  // nextPage.addEventListener('click', nextPageClick, false);
+  document.addEventListener('mousewheel', function (event) {
+    console.log(event.wheelDelta);
+    if (event.wheelDelta > 0) {
+      initNum = initNum == 0 ? 0 : initNum - 1;
+      console.log(initNum);
+      nextPageClick(initNum);
+      timerWheel = null;
+    } else {
+      initNum = initNum == initElementArr.length - 1 ? initElementArr.length - 1 : initNum + 1;
+      console.log(initNum);
+      nextPageClick(initNum);
+      timerWheel = null;
+    }
+  })
 }
 
+function aaa() {
+  console.log('aaa');
+}
 // 通用函数
 // 随机起点和终点的X坐标
 function getRandomX(num) {
@@ -71,8 +90,7 @@ function getBoomArray() {
 // 产生随机的起止点
 function startBoom(num) {
   for (let i = 0; i < num; i++) {
-    // let startPointX = Math.floor(getRandomX(clientWidth));
-    let startPointX = 130;
+    let startPointX = clientWidth / 2;
     let endPointX = Math.floor(getRandomX(clientWidth));
     let endPointY = Math.floor(getRandomY(clientHeight));
     startAndEnd(startPointX, 0, endPointX, endPointY);
@@ -118,8 +136,12 @@ function boom(element, x, y) {
     $(flash).stop().animate({
       bottom: '98px'
     }, 3000, function () {
-      // document.body.removeChild(boom);
       boom.removeChild(flash);
+      $(boom).stop().animate({
+        opacity: 0
+      }, 500, function () {
+        boomPart.removeChild(boom);
+      })
     })
     // 设置火焰轨迹
     let timer = setInterval(() => {
@@ -134,41 +156,44 @@ function boom(element, x, y) {
       }, 500)
       if ($(flash).is(':hidden')) {
         clearInterval(timer);
+        // setTimeout(() => {
+        // boomPart.removeChild(boom);
+        // }, 500);
       }
     }, 100);
   }
 }
 // nextPage点击事件:翻页
-function nextPageClick() {
-  switch (initNum) {
-    case 0:
+function nextPageClick(num) {
+  switch (num) {
+    case 1:
       $('.initPage').stop().animate({
         opacity: 0
-      }, 1000)
-      $('.firstPage').stop().animate({
-        opacity: 1
       }, 1000, function () {
         $('.initPage').css({
           display: 'none'
         })
-        initNum++;
+      })
+      $('.firstPage').stop().animate({
+        opacity: 1
+      }, 1000, function () {
         createStar();
       })
       break;
-    case 1:
+    case 2:
       $('.firstPage').stop().animate({
         opacity: 0
-      }, 1000)
-      $('.secondPage').stop().animate({
-        opacity: 1
       }, 1000, function () {
         $('.firstPage').css({
           display: 'none'
         })
-        initNum++;
+      })
+      $('.secondPage').stop().animate({
+        opacity: 1
+      }, 1000, function () {
         startBoom(5);
         timerBoom = setInterval(() => {
-          startBoom(3);
+          startBoom(5);
         }, 3000);
       })
       break;
