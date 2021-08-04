@@ -59,6 +59,11 @@ function getRandomY(num) {
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+// 函数节流
+function trotol(func, timeout) {
+  let timer = null;
+  return 
+}
 
 // 初始部分函数
 
