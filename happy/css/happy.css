@@ -9,18 +9,18 @@ body {
 	cursor: url('../static/img/cursor.png'), pointer;
 }
 /* 下一页图标样式 */
-.nextPage {
+/* .nextPage {
 	height: 100px;
 	width: 60px;
 	background: url('../static/img/down.png') center center no-repeat;
 	background-size: 100% 100%;
-	/* display: none; */
+	display: none;
 	position: absolute;
 	bottom: 0;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 99;
-}
+} */
 /* 初始页样式 欢迎语等 */
 .initPage {
 	height: 100%;

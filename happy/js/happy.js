@@ -5,9 +5,7 @@ const mutecw = clientWidth / 10;
 
 var initNum = 0;
 var initElementArr = ['.initPage', '.firstPage', '.secondPage'];
-var eventList = [aaa, createStar, startBoom];
 
-const nextPage = document.querySelector('.nextPage');
 const initPage = document.querySelector('.initPage');
 const starPart = document.querySelector('.starPart');
 const boomPart = document.querySelector('.boomPart');
@@ -17,28 +15,13 @@ var timerBoom = null;
 window.onload = function () {
   document.addEventListener('click', function (event) {
     console.log(event.clientX, event.clientY);
-  })
-  // nextPage.addEventListener('click', nextPageClick, false);
-  document.addEventListener('mousewheel', function (event) {
-    console.log(event.wheelDelta);
-    if (event.wheelDelta > 0) {
-      initNum = initNum == 0 ? 0 : initNum - 1;
-      console.log(initNum);
-      nextPageClick(initNum);
-      timerWheel = null;
-    } else {
-      initNum = initNum == initElementArr.length - 1 ? initElementArr.length - 1 : initNum + 1;
-      console.log(initNum);
-      nextPageClick(initNum);
-      timerWheel = null;
-    }
-  })
+  }, false)
+  document.addEventListener('mousewheel', function(event){
+    debounce(mousewheelEvent, 500, event);
+  }, false);
 }
 
-function aaa() {
-  console.log('aaa');
-}
-// 通用函数
+// 通用函数------------------------------------------------------------------------------------------
 // 随机起点和终点的X坐标
 function getRandomX(num) {
   let randNum;
@@ -60,15 +43,56 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 // 函数节流
-function trotol(func, timeout) {
+const trotol = (() => {
   let timer = null;
-  return 
+  return function (func, timeout, ...args) {
+    let that = this;
+    if (!timer) {
+      func.apply(that, args);
+      timer = setTimeout(() => {
+        timer = null;
+      }, timeout);
+    }
+  }
+})();
+// 函数防抖
+const debounce = (() => {
+  let timer = null;
+  return function (func, timeout, ...args) {
+    let that = this;
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      func.apply(that, args)
+    }, timeout);
+  }
+})();
+// 鼠标滚轮事件
+const mousewheelEvent = function (event) {
+  if (event.wheelDelta > 0) {
+    console.log(initNum, 'up-now');
+    if (initNum == 0) {
+      initNum = 0;
+    } else {
+      initNum--;
+      trotol(nextPageClick, 1200, initNum)
+    }
+  } else {
+    console.log(initNum, 'down-now');
+    if (initNum == initElementArr.length - 1) {
+      initNum = initElementArr.length - 1;
+    } else {
+      initNum++;
+      trotol(nextPageClick, 1200, initNum)
+    }
+  }
 }
 
-// 初始部分函数
+// 初始部分函数---------------------------------------------------------------------------------------
 
 
-// 第一部分:星星,流星
+// 第一部分:星星,流星---------------------------------------------------------------------------------
 function createStar() {
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
@@ -84,7 +108,7 @@ function createStar() {
   createStar = function () {};
 }
 
-// 第二部分:烟花
+// 第二部分:烟花--------------------------------------------------------------------------------------
 // 烟花爆炸后的随机路径
 function getBoomArray() {
   let array1 = [getRandom(0, 90), getRandom(90, 180), getRandom(180, 270), getRandom(270, 360)];
@@ -161,24 +185,32 @@ function boom(element, x, y) {
       }, 500)
       if ($(flash).is(':hidden')) {
         clearInterval(timer);
-        // setTimeout(() => {
-        // boomPart.removeChild(boom);
-        // }, 500);
       }
     }, 100);
   }
 }
-// nextPage点击事件:翻页
+// nextPage事件:翻页---------------------------------------------------------------------------------
 function nextPageClick(num) {
+  console.log(num, '------->');
   switch (num) {
+    case 0:
+      $('.firstPage').stop().animate({
+        opacity: 0
+      }, 1000)
+      $('.initPage').stop().animate({
+        opacity: 1
+      }, 1000, function () {
+        console.log('cccccc');
+      })
+      break;
     case 1:
+      clearTimeout(timerBoom);
       $('.initPage').stop().animate({
         opacity: 0
-      }, 1000, function () {
-        $('.initPage').css({
-          display: 'none'
-        })
-      })
+      }, 1000)
+      $('.secondPage').stop().animate({
+        opacity: 0
+      }, 1000)
       $('.firstPage').stop().animate({
         opacity: 1
       }, 1000, function () {
@@ -186,13 +218,10 @@ function nextPageClick(num) {
       })
       break;
     case 2:
+      clearTimeout(timerBoom);
       $('.firstPage').stop().animate({
         opacity: 0
-      }, 1000, function () {
-        $('.firstPage').css({
-          display: 'none'
-        })
-      })
+      }, 1000)
       $('.secondPage').stop().animate({
         opacity: 1
       }, 1000, function () {
