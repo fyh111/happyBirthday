@@ -4,10 +4,11 @@ const mutech = clientHeight / 10;
 const mutecw = clientWidth / 10;
 
 var initNum = 0;
-var initElementArr = ['.initPage', '.firstPage', '.secondPage'];
+var initElementArr = ['.initPage', '.firstPage', '.secondPage', 'thirdPage'];
 
 const initPage = document.querySelector('.initPage');
 const starPart = document.querySelector('.starPart');
+const metePart = document.querySelector('.meteorPart');
 const boomPart = document.querySelector('.boomPart');
 
 var timerBoom = null;
@@ -42,7 +43,7 @@ function getRandomY(num) {
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-// 函数节流
+// 函数节流,一定时间内只能触发一次
 const trotol = (() => {
   let timer = null;
   return function (func, timeout, ...args) {
@@ -55,7 +56,7 @@ const trotol = (() => {
     }
   }
 })();
-// 函数防抖
+// 函数防抖,多次触发时重新计时
 const debounce = (() => {
   let timer = null;
   return function (func, timeout, ...args) {
@@ -89,10 +90,10 @@ const mousewheelEvent = function (event) {
   }
 }
 
-// 初始部分函数---------------------------------------------------------------------------------------
+// 初始部分函数--------------------------------------------------------------------------------------
 
 
-// 第一部分:星星,流星---------------------------------------------------------------------------------
+// 第一部分:星星-------------------------------------------------------------------------------------
 function createStar() {
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
@@ -107,8 +108,18 @@ function createStar() {
   }
   createStar = function () {};
 }
-
-// 第二部分:烟花--------------------------------------------------------------------------------------
+// 第二部分:流星-------------------------------------------------------------------------------------
+function meteor() {
+  let x = getRandomX(clientWidth);
+  let y = clientHeight;
+  let div = document.createElement('div');
+  div.classList.add('meteor');
+  metePart.appendChild(div);
+  $(div).css({
+    left: x + 'px'
+  })
+}
+// 第三部分:烟花-------------------------------------------------------------------------------------
 // 烟花爆炸后的随机路径
 function getBoomArray() {
   let array1 = [getRandom(0, 90), getRandom(90, 180), getRandom(180, 270), getRandom(270, 360)];
@@ -194,35 +205,41 @@ function nextPageClick(num) {
   console.log(num, '------->');
   switch (num) {
     case 0:
-      $('.firstPage').stop().animate({
-        opacity: 0
-      }, 1000)
+      clearTimeout(timerBoom);
       $('.initPage').stop().animate({
         opacity: 1
       }, 1000, function () {
-        console.log('cccccc');
+        console.log('init');
       })
+      $('.initPage').siblings().stop().animate({
+        opacity: 0
+      }, 1000)
       break;
     case 1:
       clearTimeout(timerBoom);
-      $('.initPage').stop().animate({
-        opacity: 0
-      }, 1000)
-      $('.secondPage').stop().animate({
-        opacity: 0
-      }, 1000)
       $('.firstPage').stop().animate({
         opacity: 1
       }, 1000, function () {
         createStar();
       })
+      $('.firstPage').siblings().stop().animate({
+        opacity: 0
+      }, 1000)
       break;
     case 2:
       clearTimeout(timerBoom);
-      $('.firstPage').stop().animate({
+      $('.secondPage').stop().animate({
+        opacity: 1
+      }, 1000, function() {
+        console.log('second');
+      })
+      $('.secondPage').siblings().stop().animate({
         opacity: 0
       }, 1000)
-      $('.secondPage').stop().animate({
+      break;
+    case 3:
+      clearTimeout(timerBoom);
+      $('.thirdPage').stop().animate({
         opacity: 1
       }, 1000, function () {
         startBoom(5);
@@ -230,6 +247,9 @@ function nextPageClick(num) {
           startBoom(5);
         }, 3000);
       })
+      $('.thirdPage').siblings().stop().animate({
+        opacity: 0
+      }, 1000)
       break;
   }
 }

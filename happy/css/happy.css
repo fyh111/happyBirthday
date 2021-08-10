@@ -32,7 +32,7 @@ body {
 	bottom: 0;
 	opacity: 1;
 }
-/* 第一部分样式 星星,流星部分 */
+/* 第一部分样式 星星部分 */
 .firstPage {
 	height: 100%;
 	width: 100%;
@@ -67,12 +67,32 @@ body {
 		transform: scale(1);
 	}
 }
-/* 第二部分样式 烟花部分 */
+/* 第二部分样式 流星部分 */
 .secondPage {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 6;
+  opacity: 0;
+}
+.meteorPart{
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(27, 27, 27, 0.9), rgba(80, 90, 90, 0.7));
+}
+.meteor {
+  height: 5px;
+  width: 5px;
+  position: absolute;
+  top: 0;
+  z-index: 5;
+}
+/* 第三部分样式 烟花部分 */
+.thirdPage {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	z-index: 6;
+	z-index: 4;
 	opacity: 0;
 }
 .boomPart {

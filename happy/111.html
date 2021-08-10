@@ -30,7 +30,20 @@
   <script>
     $(".div2").stop().animate({
       'background-image': 'linear-gradient(90deg, rgb(0, 0, 0) 0%, 80%, rgb(255, 237, 136) 100%)'
-    }, 3000)
+    }, 3000);
+
+
+    function split() {
+      var a = location.href.split('?')[1];
+      var obj = {};
+      a.replace(/([^?&=]+)=([^?&=]*)/g, function(res, $1, $2) {
+        var key = decodeURIComponent($1);
+        var value = decodeURIComponent($2);
+        obj[key] = String(value);
+        return res;
+      })
+      return obj;
+    }
   </script>
 </body>
 </html>
