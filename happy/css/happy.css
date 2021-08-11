@@ -8,6 +8,14 @@ body {
 	overflow: hidden;
 	cursor: url('../static/img/cursor.png'), pointer;
 }
+p.helloTip {
+  position: absolute;
+  height: 20px;
+  width: 100px;
+  z-index: 999;
+  user-select: none;
+}
+
 /* 下一页图标样式 */
 /* .nextPage {
 	height: 100px;
@@ -21,26 +29,73 @@ body {
 	transform: translateX(-50%);
 	z-index: 99;
 } */
+
 /* 初始页样式 欢迎语等 */
 .initPage {
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	background-image: linear-gradient(to bottom, rgba(0, 217, 255, 0.9) 0%, rgba(139, 238, 255, 1) 100%);
-	z-index: 10;
+	z-index: 90;
 	left: 0;
 	bottom: 0;
-	opacity: 1;
+  opacity: 1;
+  display: block;
 }
-/* 第一部分样式 星星部分 */
+
+/* 第一部分样式 流星部分 */
 .firstPage {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 70;
+  opacity: 0;
+  display: none;
+}
+.meteorPart{
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(27, 27, 27, 0.9), rgba(80, 90, 90, 0.7));
+}
+.meteorPath {
+  width: 5px;
+  position: absolute;
+  top: -5px;
+  z-index: 70;
+  transform: rotate(45deg);
+  transform-origin: 2.5px 0px;
+}
+.meteor {
+  height: 5px;
+  width: 5px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+  background: rgb(251, 251, 251);
+  box-shadow: 0px 0px 10px 5px rgb(255, 255, 255);
+  z-index: 72;
+}
+.meteorCopy {
+  height: 5px;
+  width: 5px;
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(255, 255, 255);
+  opacity: 1;
+  z-index: 71;
+}
+
+/* 第二部分样式 星星部分 */
+.secondPage {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	z-index: 8;
-	opacity: 0;
+	z-index: 80;
+  opacity: 0;
+  display: none;
 }
-.firstPage .starPart {
+.secondPage .starPart {
 	height: 100%;
 	width: 100%;
 	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
@@ -67,33 +122,15 @@ body {
 		transform: scale(1);
 	}
 }
-/* 第二部分样式 流星部分 */
-.secondPage {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: 6;
-  opacity: 0;
-}
-.meteorPart{
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(to bottom, rgba(27, 27, 27, 0.9), rgba(80, 90, 90, 0.7));
-}
-.meteor {
-  height: 5px;
-  width: 5px;
-  position: absolute;
-  top: 0;
-  z-index: 5;
-}
+
 /* 第三部分样式 烟花部分 */
 .thirdPage {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	z-index: 4;
+	z-index: 60;
 	opacity: 0;
+  display: none;
 }
 .boomPart {
 	height: 100%;
@@ -108,7 +145,7 @@ body {
 	background: rgba(255, 172, 40, 0.7);
 	box-shadow: 0px 2px 15px 5px rgba(255, 172, 40, 0.7);
 	transform-origin: 50% 50%;
-	z-index: 1;
+	z-index: 61;
 }
 .boomPart .flame::before {
 	content: '';
@@ -119,7 +156,7 @@ body {
 	position: absolute;
 	top: -5px;
 	left: 0;
-	z-index: 2;
+	z-index: 62;
 }
 .boomPart .boom {
 	height: 100px;
@@ -127,7 +164,7 @@ body {
 	position: absolute;
 	transform-origin: 50% 100%;
 	border-radius: 1px;
-	z-index: 2;
+	z-index: 62;
 }
 .boomPart .boom .flash {
 	height: 2px;
@@ -138,5 +175,5 @@ body {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	z-index: 3;
+	z-index: 63;
 }
